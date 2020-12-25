@@ -1,35 +1,14 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
+ * React Native Speech To Text
  */
 
-// import React in our code
 import React, {useState, useEffect} from 'react';
+import {SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight, ScrollView,StatusBar} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-// import all the components we are going to use
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableHighlight,
-  ScrollView,
-} from 'react-native';
 
 // import Voice
 import Voice from 'react-native-voice';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
 const App: () => React$Node = () => {
   const [pitch, setPitch] = useState('');
@@ -57,13 +36,13 @@ const App: () => React$Node = () => {
   const onSpeechStart = (e) => {
     //Invoked when .start() is called without error
     console.log('onSpeechStart: ', e);
-    setStarted('√');
+    setStarted('-');
   };
 
   const onSpeechEnd = (e) => {
     //Invoked when SpeechRecognizer stops recognition
     console.log('onSpeechEnd: ', e);
-    setEnd('√');
+    setEnd('-');
   };
 
   const onSpeechError = (e) => {
@@ -144,28 +123,24 @@ const App: () => React$Node = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+
+      <StatusBar backgroundColor="#6456C0" barStyle={'light-content'} />
+
       <View style={styles.container}>
         <Text style={styles.titleText}>
-          Speech to Text Conversion in React Native – Voice Recognition
+         Convert Text To Speech
         </Text>
         <Text style={styles.textStyle}>Press mike to start Recognition</Text>
+        
+        <TouchableHighlight onPress={startRecognizing} style={styles.microphone}>
+          <Icon size={32} color="white" name="microphone" />
+        </TouchableHighlight>
+
         <View style={styles.headerContainer}>
           <Text style={styles.textWithSpaceStyle}>{`Started: ${started}`}</Text>
           <Text style={styles.textWithSpaceStyle}>{`End: ${end}`}</Text>
         </View>
-        <View style={styles.headerContainer}>
-          <Text style={styles.textWithSpaceStyle}>{`Pitch: \n ${pitch}`}</Text>
-          <Text style={styles.textWithSpaceStyle}>{`Error: \n ${error}`}</Text>
-        </View>
-        <TouchableHighlight onPress={startRecognizing}>
-          <Image
-            style={styles.imageButton}
-            source={{
-              uri:
-                'https://raw.githubusercontent.com/AboutReact/sampleresource/master/microphone.png',
-            }}
-          />
-        </TouchableHighlight>
+
         <Text style={styles.textStyle}>Partial Results</Text>
         <ScrollView>
           {partialResults.map((result, index) => {
@@ -189,18 +164,27 @@ const App: () => React$Node = () => {
         <View style={styles.horizontalView}>
           <TouchableHighlight
             onPress={stopRecognizing}
-            style={styles.buttonStyle}>
-            <Text style={styles.buttonTextStyle}>Stop</Text>
+            style={{...styles.buttonStyle,...styles.stopButton}}>
+            <Text style={styles.buttonTextStyle}>
+              Stop&nbsp;
+              <Icon size={16} color="white" name="stop" />
+            </Text>
           </TouchableHighlight>
           <TouchableHighlight
             onPress={cancelRecognizing}
-            style={styles.buttonStyle}>
-            <Text style={styles.buttonTextStyle}>Cancel</Text>
+            style={{...styles.buttonStyle}}>
+            <Text style={styles.buttonTextStyle}>
+              Cancel&nbsp;
+              <Icon size={16} color="white" name="times" />
+            </Text>
           </TouchableHighlight>
           <TouchableHighlight
             onPress={destroyRecognizer}
-            style={styles.buttonStyle}>
-            <Text style={styles.buttonTextStyle}>Destroy</Text>
+            style={{...styles.buttonStyle,...styles.destroyButton}}>
+            <Text style={styles.buttonTextStyle}>
+              Destroy&nbsp;
+              <Icon size={16} color="white" name="trash" />
+            </Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -214,6 +198,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     padding: 5,
+    backgroundColor: '#EBECF0',
+    marginTop: 5
   },
   headerContainer: {
     flexDirection: 'row',
@@ -225,14 +211,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
   },
+  microphone:{
+    backgroundColor:'#6456C0',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    display: 'flex',
+    justifyContent:'center',
+    alignItems:'center',
+  },
   buttonStyle: {
     flex: 1,
     justifyContent: 'center',
     marginTop: 15,
     padding: 10,
-    backgroundColor: '#8ad24e',
+    backgroundColor: '#73AAF8',
     marginRight: 2,
     marginLeft: 2,
+  },
+  destroyButton: {
+    backgroundColor: '#E480DB',
+  },
+  stopButton: {
+    backgroundColor: '#6456C0'
   },
   buttonTextStyle: {
     color: '#fff',
