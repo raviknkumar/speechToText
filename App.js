@@ -140,31 +140,19 @@ const App: () => React$Node = () => {
           <Text style={styles.textWithSpaceStyle}>{`Started: ${started}`}</Text>
           <Text style={styles.textWithSpaceStyle}>{`End: ${end}`}</Text>
         </View>
-
-        <Text style={styles.textStyle}>Partial Results</Text>
-        <ScrollView>
-          {partialResults.map((result, index) => {
-            return (
-              <Text key={`partial-result-${index}`} style={styles.textStyle}>
-                {result}
-              </Text>
-            );
-          })}
-        </ScrollView>
+        
         <Text style={styles.textStyle}>Results</Text>
         <ScrollView style={{marginBottom: 42}}>
-          {results.map((result, index) => {
-            return (
-              <Text key={`result-${index}`} style={styles.textStyle}>
-                {result}
+          {results &&
+              <Text key={`result-0`} style={styles.textStyle}>
+                {results[0]}
               </Text>
-            );
-          })}
+        }
         </ScrollView>
         <View style={styles.horizontalView}>
           <TouchableHighlight
             onPress={stopRecognizing}
-            style={{...styles.buttonStyle,...styles.stopButton}}>
+            style={{...styles.buttonStyle,...styles.primaryButton}}>
             <Text style={styles.buttonTextStyle}>
               Stop&nbsp;
               <Icon size={16} color="white" name="stop" />
@@ -180,9 +168,9 @@ const App: () => React$Node = () => {
           </TouchableHighlight>
           <TouchableHighlight
             onPress={destroyRecognizer}
-            style={{...styles.buttonStyle,...styles.destroyButton}}>
+            style={{...styles.buttonStyle, ...styles.primaryButton}}>
             <Text style={styles.buttonTextStyle}>
-              Destroy&nbsp;
+              Delete&nbsp;
               <Icon size={16} color="white" name="trash" />
             </Text>
           </TouchableHighlight>
@@ -229,10 +217,7 @@ const styles = StyleSheet.create({
     marginRight: 2,
     marginLeft: 2,
   },
-  destroyButton: {
-    backgroundColor: '#E480DB',
-  },
-  stopButton: {
+  primaryButton: {
     backgroundColor: '#6456C0'
   },
   buttonTextStyle: {
@@ -247,6 +232,7 @@ const styles = StyleSheet.create({
   textStyle: {
     textAlign: 'center',
     padding: 12,
+    fontWeight: '700'
   },
   imageButton: {
     width: 50,
