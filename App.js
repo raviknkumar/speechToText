@@ -144,7 +144,7 @@ const App: () => React$Node = () => {
         <Text style={styles.textStyle}>Results</Text>
         <ScrollView style={{marginBottom: 42}}>
           {results &&
-              <Text key={`result-0`} style={styles.textStyle}>
+              <Text key={`result-0`} style={{...styles.textStyle, ...styles.resultStyle}}>
                 {results[0]}
               </Text>
         }
@@ -233,6 +233,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 12,
     fontWeight: '700'
+  },
+  resultStyle: {
+    fontSize: 24,
   },
   imageButton: {
     width: 50,
